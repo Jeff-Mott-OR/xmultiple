@@ -1,0 +1,35 @@
+{
+  "name": "xmultiple",
+  "version": "0.0.0",
+  "description": "Multiple inheritance with ES6 proxies.",
+  "homepage": "",
+  "author": {
+    "name": "Jeff Mott",
+    "email": "jeff.mott.or@gmail.com",
+    "url": ""
+  },
+  "files": [
+    "lib"
+  ],
+  "main": "lib\\index.js",
+  "keywords": [
+    "multiple",
+    "inheritance",
+    "proxy"
+  ],
+  "repository": "Jeff-Mott-OR/xmultiple",
+  "devDependencies": {
+    "gulp": "^3.6.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0"
+  },
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
+}
