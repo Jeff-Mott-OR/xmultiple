@@ -1,5 +1,7 @@
-# xmultiple [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# xmultiple
 > Multiple inheritance with ES6 proxies.
+
+Provides multiple inheritance in the same manner as JavaScript's native inheritance mechanism, by delegating to other objects. But rather than delegating to just one other object, as the prototype chain does, this library creates a proxy that will delegate to multiple other objects.
 
 ## Installation
 
@@ -12,16 +14,48 @@ $ npm install --save xmultiple
 ```js
 var xmultiple = require('xmultiple');
 
-xmultiple('Rainbow');
+// Object inherits from multiple other objects
+{
+    const base1 = {'foo': 'foo'};
+    const base2 = {'bar': 'bar'};
+    const base3 = {'baz': 'baz'};
+
+    const delegatesToMultiple = xmultiple(base1, base2, base3);
+    delegatesToMultiple.foo // "foo"
+    delegatesToMultiple.bar // "bar"
+    delegatesToMultiple.baz // "baz"
+}
+
+// Class inherits from multiple other classes
+{
+    class Base1 {
+        foo() {
+            return 'foo';
+        }
+    }
+
+    class Base2 {
+        bar() {
+            return 'bar';
+        }
+    }
+
+    class Base3 {
+        baz() {
+            return 'baz';
+        }
+    }
+
+    class DelegatesToMultiple extends xmultiple(Base1, Base2, Base3) {
+    }
+
+    const delegatesToMultiple = new DelegatesToMultiple();
+    delegatesToMultiple.foo() // "foo"
+    delegatesToMultiple.bar() // "bar"
+    delegatesToMultiple.baz() // "baz"
+}
 ```
 ## License
 
-MIT © [Jeff Mott]()
+MIT © Jeff Mott
 
-
-[npm-image]: https://badge.fury.io/js/xmultiple.svg
-[npm-url]: https://npmjs.org/package/xmultiple
-[travis-image]: https://travis-ci.org/Jeff-Mott-OR/xmultiple.svg?branch=master
-[travis-url]: https://travis-ci.org/Jeff-Mott-OR/xmultiple
-[daviddm-image]: https://david-dm.org/Jeff-Mott-OR/xmultiple.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/Jeff-Mott-OR/xmultiple
