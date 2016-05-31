@@ -61,4 +61,17 @@ describe('xmultiple', function () {
     assert.equal(D.y, Y.y);
     assert.equal(D.z, Z.z);
   });
+
+  it('should not access object properties more than once', function () {
+    let foo = {
+      n: 0,
+      get incrementOnAccess() {
+        return ++this.n;
+      }
+    };
+
+    let d = xmultiple(foo);
+    assert.equal(d.incrementOnAccess, 1);
+    assert.equal(d.incrementOnAccess, 2);
+  });
 });
