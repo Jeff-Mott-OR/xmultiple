@@ -55,6 +55,11 @@ var xmultiple = require('xmultiple');
     delegatesToMultiple.baz() // "baz"
 }
 ```
+
+## Notes
+
+* The search for properties inherited from parents is depth-first, left-to-right. Thus, if a property is not found in `delegatesToMultiple`, it is searched for in `base1`, then (recursively) in the [[Prototype]] of `base1` through the normal prototype chain, and if it's not found there, it is searched for in `base2`, and so on.
+
 ## License
 
 MIT © Jeff Mott
