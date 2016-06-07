@@ -149,5 +149,38 @@ module.exports = {
             delegatesToOneAssignedFromMultiple.baz();
         };
     }()),
+
+    'class factories delegate to multiple': (function() {
+        // Preparation code
+        const Base1 = (Heritage = Object) => class extends Heritage {
+            foo() {
+                return 'foo';
+            }
+        }
+
+        const Base2 = (Heritage = Object) => class extends Heritage {
+            bar() {
+                return 'bar';
+            }
+        }
+
+        const Base3 = (Heritage = Object) => class extends Heritage {
+            baz() {
+                return 'baz';
+            }
+        }
+
+        class DelegatesToMultiple extends Base1(Base2(Base3())) {
+        }
+
+        const delegatesToMultiple = new DelegatesToMultiple();
+
+        // Test
+        return function() {
+            delegatesToMultiple.foo();
+            delegatesToMultiple.bar();
+            delegatesToMultiple.baz();
+        };
+    }()),
   }
 };
