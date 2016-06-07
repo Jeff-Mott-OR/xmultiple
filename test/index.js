@@ -32,19 +32,16 @@ describe('xmultiple', function () {
     assert.equal(d.z, z.z);
   });
 
-  it('should inherit class properties', function () {
+  it('should inherit class prototype properties', function () {
     // Parent classes
     class X {
       x() {}
-      static x() {}
     }
     class Y {
       y() {}
-      static y() {}
     }
     class Z {
       z() {}
-      static z() {}
     }
 
     // Derived from multiple parents
@@ -55,6 +52,22 @@ describe('xmultiple', function () {
     assert.equal(d.x, X.prototype.x);
     assert.equal(d.y, Y.prototype.y);
     assert.equal(d.z, Z.prototype.z);
+  });
+
+  it('should inherit class static properties', function () {
+    // Parent classes
+    class X {
+      static x() {}
+    }
+    class Y {
+      static y() {}
+    }
+    class Z {
+      static z() {}
+    }
+
+    // Derived from multiple parents
+    class D extends xmultiple(X, Y, Z) {}
 
     // Expect D to inherit from X, Y, Z
     assert.equal(D.x, X.x);
