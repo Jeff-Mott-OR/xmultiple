@@ -19,9 +19,9 @@ describe('xmultiple', function () {
     assert.equal(d.z, z.z);
 
     // Expect d to not own properties
-    assert(!d.hasOwnProperty('x'));
-    assert(!d.hasOwnProperty('y'));
-    assert(!d.hasOwnProperty('z'));
+    assert(!Object.prototype.hasOwnProperty.call(d, 'x'));
+    assert(!Object.prototype.hasOwnProperty.call(d, 'y'));
+    assert(!Object.prototype.hasOwnProperty.call(d, 'z'));
 
     // Expect monkey patching parents to be reflected in derived
     x.x = {};
@@ -86,5 +86,29 @@ describe('xmultiple', function () {
     let d = xmultiple(foo);
     assert.equal(d.incrementOnAccess, 1);
     assert.equal(d.incrementOnAccess, 2);
+  });
+
+  it('should throw when accessing ambiguous properties', function () {
+    // Parent objects
+    let x = { x: {} };
+    let y = { x: {} };
+
+    // Derived from multiple parents
+    let d = xmultiple(x, y);
+
+    // Ambiguous access
+    assert.throws(() => d.x);
+  });
+
+  it('should not throw when multiple found values are strictly equal', function () {
+    // Parent objects
+    let x = { x: {} };
+    let y = { x: {} };
+
+    // Derived from multiple parents
+    let d = xmultiple(x, y);
+
+    // Not actually ambiguous despite multiple references
+    d.hasOwnProperty;
   });
 });
