@@ -21,7 +21,8 @@
   "devDependencies": {
     "gulp": "^3.6.0",
     "gulp-mocha": "^2.0.0",
-    "gulp-plumber": "^1.0.0"
+    "gulp-plumber": "^1.0.0",
+    "gulp-bench": "^1.1.0"
   },
   "scripts": {
     "test": "gulp test"

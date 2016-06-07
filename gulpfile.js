@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var plumber = require('gulp-plumber');
+var benchmark = require('gulp-bench');
 
 gulp.task('test', function (cb) {
   var mochaErr;
@@ -16,4 +17,9 @@ gulp.task('test', function (cb) {
     .on('end', function () {
       cb(mochaErr);
     });
+});
+
+gulp.task('bench', function () {
+  return gulp.src('bench/test.js', {read: false})
+    .pipe(benchmark());
 });
