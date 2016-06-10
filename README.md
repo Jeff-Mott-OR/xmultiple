@@ -58,7 +58,45 @@ var xmultiple = require('xmultiple');
 
 ## Notes
 
-* The search for properties inherited from parents is depth-first, left-to-right. Thus, if a property is not found in `delegatesToMultiple`, it is searched for in `base1`, then (recursively) in the [[Prototype]] of `base1` through the normal prototype chain, and if it's not found there, it is searched for in `base2`, and so on.
+* Ambiguous calls (that is, collisions) will throw an error.
+
+```js
+class Base1 {
+    foo() {}
+}
+
+class Base2 {
+    foo() {}
+}
+
+class DelegatesToMultiple extends xmultiple(Base1, Base2) {
+}
+
+const delegatesToMultiple = new DelegatesToMultiple();
+delegatesToMultiple.foo() // error! ambiguous, Base1#foo or Base2#foo?
+```
+
+* It's slow. It's a couple orders of magnitude slower than either `Object.assign` or [subclass factories](http://www.2ality.com/2016/05/six-nifty-es6-tricks.html#simple-mixins-via-subclass-factories). I hope it will get faster over time.
+
+* Calling super constructors is problematic. Calling `super()` will invoke only the singular home object, but neither can the proxy iteratively invoke each super constructor since class constructors can't be function-called.
+
+## Alternative
+
+If this library doesn't meet your needs, instead consider [subclass factories](http://www.2ality.com/2016/05/six-nifty-es6-tricks.html#simple-mixins-via-subclass-factories).
+
+```js
+const Base1 = (Sup = Object) => class extends Sup {
+    foo() {}
+};
+const Base2 = (Sup = Object) => class extends Sup {
+    bar() {}
+};
+const Base3 = (Sup = Object) => class extends Sup {
+    baz() {}
+};
+
+class DelegatesToMultiple extends Base1(Base2(Base3())) {}
+```
 
 ## License
 
